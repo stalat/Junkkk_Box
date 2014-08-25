@@ -1,0 +1,14 @@
+<html>
+	<head>
+		{%if title%}
+		<title>{{title}}-microblog<title>
+		{%else%}
+		<title>Welcome to the MicroBlog	</title>
+		{%endif%}
+	</head>
+	<body>
+		<hr>
+		<div>Developed by Talat Parwez:<a href='/index'>TalatParwez.com</a></div>
+		{%block content%}{%endblock%}
+	</body>
+</html>

@@ -1,0 +1,163 @@
+I am going to create a web service using a tutorial and this web service is requiring installation of some python flask packages, So I install in venv and these packages are:
+	pip install flask==0.9
+	pip install flask-login
+	pip install flask-openid
+	pip install sqlalchemy==0.7.9
+	pip install flask-sqlalchemy==0.16
+	pip install sqlalchemy-migrate==0.7.2
+	pip install flask-whooshalchemy==0.55a
+	pip install flask-wtf==0.8.4
+	pip install pytz==2013b
+	pip install flask-babel==0.8
+	pip install flup
+
+Create a folder microblog and inside this folder create some other folder as:
+	mkdir app						#put application package
+	mkdir app/static					#put static content as images/javascript/stylesheets
+	mkdir app/templates					#put templates here 
+	mkdir tmp
+
+
+Let's start by creating a simple init script for our app package (file app/__init__.py):
+
+	from flask import Flask
+	app = Flask(__name__)
+	from app import views
+
+The views are the handlers that respond to requests from web browsers
+
+In Flask views are written as Python functions. Each view function is mapped to one or more request URLs
+
+	from app import app
+
+	@app.route('/')
+	@app.route('/index')
+	def index():
+	    return "Hello, World!"
+
+Make a file as run.py,
+	
+	from app import app
+	app.run(debug=True)
+
+
+A python file having HTML code <views.py>:
+from app import app
+
+	@app.route('/')
+	@app.route('/index')
+	def index():
+	    user = { 'nickname': 'Miguel' } # fake user
+	    return '''
+	<html>
+	  <head>
+	    <title>Home Page</title>
+	  </head>
+	  <body>
+	    <h1>Hello, ''' + user['nickname'] + '''</h1>
+	  </body>
+	</html>
+	'''
+
+Now to render this Page we must call this Page from views.py as:
+	from flask import render_template
+	from app import app
+	@app.route('/')
+	@app.route('/index')
+	def index():
+		user={"nickname":"Talat Parwez"}
+		return render_template("index.html",title='Home Page',user=user)
+
+
+If I want to control statements over my html page then it can be added as:
+	{% if condition%}
+	{% else %}
+	{% endif %}
+
+	<html>
+	  <head>
+		{% if title %}
+	    <title>{{title}} - microblog</title>
+		{% else %}
+		<title>Welcome to microblog</title>
+		{% endif %}
+	  </head>
+	  <body>
+	      <h1>Hello {{user.nickname}}!</h1>
+		  <h3>{{Auth}}</h3>
+		  <input type="textbox">
+	  </body>
+	</html>
+
+
+If I want to loop through the data I recieved from the views.py,I can use the for loop {%for iter in sequence%}...{%endfor%}, <views.py>
+
+	def index():
+	    user = { 'nickname': 'Miguel' } # fake user
+	    posts = [ # fake array of posts
+		{ 
+		    'author': { 'nickname': 'John' }, 
+		    'body': 'Beautiful day in Portland!' 
+		},
+		{ 
+		    'author': { 'nickname': 'Susan' }, 
+		    'body': 'The Avengers movie was so cool!' 
+		}
+	    ]
+	    return render_template("index.html",
+		title = 'Home',
+		user = user,
+		posts = posts)
+
+The data will be recieved by index.html as:
+
+	<html>
+	  <head>
+		{% if title %}
+	    <title>{{title}} - microblog</title>
+		{% else %}
+		<title>Welcome to microblog</title>
+		{% endif %}
+	  </head>
+	  <body>
+	      <h1>Hello {{user.nickname}}!</h1>
+		  {% for post in posts %}
+		  <h3>{{post.author,post.body}}</h3>
+		  {% endfor %}
+		  <input type="textbox">
+	  </body>
+	</html>
+
+Now I want to add Headers and footers and these will be in every page and it'll be good If I create a separate file from where they can be easily called.
+So, I create a file named base.html that will be called by all the index.html pages.
+The code for the Base HTML file is as follows:
+
+	<html>
+		<head>
+			{%if title%}
+			<title>{{title}}-microblog<title>
+			{%else%}
+			<title>Welcome to the MicroBlog	</title>
+			{%endif%}
+		</head>
+		<body>
+			<div>MicroBlog: <a href='/index'>Home</a></div>
+			{%block content%}{%endblock%}												// This is used where this part should be added in index.html(the calling page)
+		</body>
+	</html>
+
+The Block content will be used in the calling page wherever we want to insert the base.html, We will keep that code inside block content section.In index.html as:
+extends is used to inherit the page that I want to call. 
+
+
+	<html>
+	  <body>
+		  {% extends "base.html" %}
+		  {% block content %}
+		  <h1>Hello {{user.nickname}}!</h1>
+		  {% for post in posts %}
+		  <h3>{{post.author,post.body}}</h3>
+		  {% endfor %}
+		  {% endblock %}
+	  </body>
+	</html>
