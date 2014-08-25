@@ -1,0 +1,126 @@
+If jivacore.ui > ..< error is commign while running the buildout command ... go to-->
+	
+	jiva_buildout-->etc--> jiva_app_version.cfg , look for jiva.app, Now ... go to eggs/jiva_app_<The version you find in app_version>--> EGG_INFO-->requires.txt-->Modify according to your needs
+
+
+First step is to install the Instance:
+Second step is to install the cms
+	localhost:port/manage
+Third step is to open the  INSTANCE:
+	localhost:port/cms/ZeUI
+
+If it is client specific then clone client's repositories into the src folder
+	change the branch and start working on them.
+	go to cms-->utils-->resetcache-->save changes.
+	cms-->zeutils-->zodbutils-->There you will find what data you've.
+	
+After having all the changes you need to push into the repositories:
+	git branch -a
+	git checkout -b "Alias_name" "actual_branch"
+	git checkout -b Rel_0.4 origin/rel_0.4
+	git remote -vv	[will check how many remotes you've and in which you'll push the code]
+	
+	if you dont have the local remote of yourself only you need to fork the repo's into your github account
+	then you'll push the data to your github remote account not to Ze's.
+	you need to add the remote if you don't have:
+		
+		git remote add "Alias_name" "git_url_for_repositories"
+
+
+	Do the git remote -vv, you will get the remote as you "Alias_name"
+	Now its time to push the data:
+		
+		git status
+		git diff "file_name"
+	
+	if changes are not required then checkout from the file and file will get undone
+		
+		git checkout "file_name"
+		git add "file_name"
+		git commit -m "message_for_this_particular_commit"
+		git push "Alias_name" "you_cur_branch":"your_github_branch"
+	Now your code has been pushed to your local forked repos,
+
+	
+	If you want to get the most updated code from the origin from where you've forked use:
+		
+		git remote -vv
+	
+	will get the list of remotes you have already. 
+
+		git fetch origin [the alias name given to forked remote]
+	
+	check the branch; eg: you want to merge the code in "branch1", then use
+		
+		git rebase "branch1"
+
+	If you have unpushed commits then you need to stash them, for it you need to do as:
+
+		git stash
+		git rebase "branch1"
+		git stash apply [All the unpushed commit now'll come to top of the stack of updated code.]
+
+	git branch -vv ['ll give your branch alias name is pointing to which branch]
+		
+	you can also use some basic stash commands i.e.:
+	
+		git stash show stash@{0}
+		git stash apply stash@{0}		
+			
+			
+Now Its time to send the pull request:
+	
+	Change the branch of Ze's from master to "working Branch" by clicking on edit
+	Do the pull request with some comments and it will get merged to the branch by another person
+  
+	
+some more git commands that are used in speficied Cases:
+		git branch --set-upstream "branch_name" [The header will move to Branch "branch_name"]
+		git branch -D "branch_name" [It will delete the Branch "branch_name"]
+
+
+If you want to discard the commit you have changed then you can easily do:
+		git reset HEAD^ [HEAD^<==>HEAD-1]
+
+If you want to delete the branch in YOUR remote repo. while pushing then better to use:
+		git push TALAT :Branch_Name
+
+
+If you wat to pull from git repo; then use the command:
+		git pull Talat_py master
+		git pull <you remote URL alias> <Your Branch>
+
+
+For client specific, We have defined all the modules specified for client only.and We can make a use of them,
+First It'll look into those client file<ClientCtrl> and if it doesn't find then it will go to ZeSentinelCtrl file.
+
+Action methods are defined for each activity.
+bcbsma_action_registry <BCBSMASentinelAction>  will contain all the method names, That will be called from ZeSentinel Rules.
+BCBSMASentinelAction has all the actions that will be called from the ZeSentinelAction in action registry and these methods are 
+taken by the BCBSMASentinelCtrl file.
+
+
+
+Action--> Ctrl --> DTML
+
+
+RuleSet:
+
+	select * from sre_idpool order by runlog_idn desc
+
+
+
+__________________________________________________________________________________________________________________________________________________________________
+Basic Knowledge
+__________________________________________________________________________________________________________________________________________________________________
+
+The tool tips messages are stored in JIVACORE.UI-->...-->jscript-->Zelook.js
+The tool tips messages are stored in Database in table code_message
+All the code for Sentinel has been written in ZeSentinelCtrl.py file
+___________________________________________________________________________________________________________________________________________________________________
+If I want to run the Laod entities from the Database, Then I need to go to the cms-->ZeSentinel-->Load Entities and then test.
+Then I want to invoke the ruleset, I'll make a shell script and invoke the ruleset by putting the contents from Jiva as:
+		Sentinel--> Search Ruleset--> Event title-->(given), 
+		Now I want to get the querries what all the querries were executed when the ruleset was invoked,
+		Go to jiva.sre.web--> Products--> ZeSentinel--> Models--> rule_general.py --> evaluate_criteri_list,
+		Get all the querries from variable.   

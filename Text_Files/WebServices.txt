@@ -1,0 +1,343 @@
+Web Services: What I need to learn Web Services
+
+Component--> Internal state that provides the transformation of data.
+Data -->Transferred from a component, recieved by a component via connector.
+Connector --> Mediates the communication,coordination among components.
+
+Stateless: Each request from a client must contain all the information required by the server to carry out the request.
+	   In other words, the server cannot store information provided by the client in one request and use it in another request.
+
+Resources are identified by URI's
+
+
+
+
+
+Restful Web Services: Representational State Transfer Web Servives- Client-server seperation
+	
+specifying constraints such as uniform interface<Client server separation implementation>.
+Data and functionality<Resource Identification> are accessed using Uniform resource Identifiers(URI).
+Resources are manipulated using Create,Read,Update,Delete		 
+				Put,   Get,Post,  Delete
+
+		Put create the new resource.
+		Get retrieves the current state of the resource in some representation.<Obtain information about a resource>
+		Post tranfers a new state onto a resource.
+		Delete deletes the resource created by Put.	
+
+Metadata about the resource is used for caching,detecting transmission errors
+
+Every interaction with a resource is stateless.
+
+
+Example for Web Services:
+
+	The first thing I need to know the URI(uniform resource identifier)
+		In this Example we are using:
+			http://[hostname]/todo/api/v1.0/
+
+	
+		GET		http://[hostname]/todo/api/v1.0/tasks/[task_id]		Retrieve a task
+		POST		http://[hostname]/todo/api/v1.0/tasks			Create a new task
+		PUT		http://[hostname]/todo/api/v1.0/tasks/[task_id]		Update an existing task
+		DELETE		http://[hostname]/todo/api/v1.0/tasks/[task_id]		Delete a task
+
+
+The task that we'll retrieve will have the following things:
+		
+
+		    id: unique identifier for tasks. Numeric type.
+		    title: short task description. String type.
+		    description: long task description. Text type.
+		    done: task completion state. Boolean type.
+
+
+Flask:The big difference is that Flask is based on other technologies such as Werkzeug and Jinja2 that exist for a longer time and it does not try to reinvent things. 	       Bottle on the other hand tries to stick to the one-file approach.
+
+The application of flask are: 
+	
+	    Need form generation? Flask-WTF.
+	    Need DB ORM ? Flask-SQLAlchemy.
+	    Need Authentication system? Flask-login or flask-openid.
+	    Need migration for DB changes? SQLAlchemy-migrate (old), or Flask-alembic (fairly new still).
+	    Need AJAX? Try Flask-Sijax
+	    Need Admin panels? Flask-Admin
+	    Need to run scheduled executables on system? Flask-celery
+	    Need email? Flask-Mail
+
+
+		<Using Flask>
+				1)import flask 
+				from flask import Flask
+				app=Flask(__name__)
+				@app.route('/Hello/hi')
+				def index():
+					return "Hello World"
+
+				if __name__=="__main__":
+					app.run(debug=True)
+
+		
+		
+		<Using Bottle>
+				2)import bottle
+				from bottle import route, run, template
+
+				@route('/hello/hi/:name')
+				def index(name):
+				    return template("<b>It's been done by using {{name}}</b>",name=name)
+				    return template('<b>Hello {{name}}</b>!', name=name)
+	
+
+				run(host='localhost', port=8082)
+
+
+	If we want to check the output of service then, We'll have to move over the Browser and it's not a good idea to go again and again to Browser window,
+	We Can perform it by using the Linux command curl as:
+				
+				 curl -i http://localhost:5000			Where 5000 is the port number where the code is running given by the o/p console
+
+
+
+
+
+		<Using Flask>		
+				1)import flask
+				from flask import Flask,jsonify
+				app=Flask(__name__)
+				tasks = [
+				    {
+					'id': 1,
+					'title': u'Buy groceries',
+					'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+					'done': False
+				    },
+				    {
+					'id': 2,
+					'title': u'Learn Python',
+					'description': u'Need to find a good Python tutorial on the web', 
+					'done': False
+				    }
+				]
+				@app.route('/',methods=['GET'])
+				def index():
+					return jsonify({'tasks':tasks})
+
+				if __name__=="__main__":
+					app.run(debug=True)
+
+	If you run this code, you will get the tasks getting displayed on your browser screen, But whatif you want to display according to the key??
+	There you'll have to send the key as a part of URI and only the data corresponding to that key will get display on the screen.
+
+		
+		<Using Flask>
+				1)import flask
+				from flask import Flask, jsonify, abort
+				app=Flask(__name__)
+				tasks = [
+				    {
+					'id': 1,
+					'title': u'Buy groceries',
+					'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+					'done': False
+				    },
+				    {
+					'id': 2,
+					'title': u'Learn Python',
+					'description': u'Need to find a good Python tutorial on the web', 
+					'done': False
+				    }
+				]
+				@app.route('/<int:task_id>',methods=['GET'])
+				def index(task_id):
+					task=filter(lambda t:t['id']==task_id,tasks)
+					return jsonify({ 'tasks': task[0] })
+				if __name__=="__main__":
+					app.run(debug=True)
+
+
+	It is having the data as tasks and in @app.route we are sending the key as integer and using the GET method 'coz we'st want to retrieve the data form 
+	the resource(can sense of data container in our case is tasks)
+	index() is recieving the argument.
+	We are filtering the data from list tasks based on key recieved by index() method.
+	Then return in json format.
+			
+
+	If I want that if the suggested URL can't find any resource,Then print some message so better to show the 404(Page not Found error).
+				if(len(task)==0):
+					abort(404)
+
+	It will print the error in a more basic way;
+	If I want to get the error in customized way ... Better to use errorhandler provided by Flask
+				
+				from flask import make_response	
+				@app.errorhandler(404)
+				def not_found(error):
+    					return make_response(jsonify( { 'error': 'Not found' } ), 404)
+
+	GET is used to retrieve the data whatever the data is present in the resource.
+	POST is used to insert the data into the existing resource.
+
+
+	<using flask>
+	Here in this example I am going to insert the data onto the resource via POST method as:
+	
+
+				import flask
+				from flask import abort,Flask,request,jsonify
+
+				app=Flask(__name__)
+				tasks = [
+				    {
+					'id': 1,
+					'title': u'Buy groceries',
+					'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+					'done': False
+				    },
+				    {
+					'id': 2,
+					'title': u'Learn Python',
+					'description': u'Need to find a good Python tutorial on the web', 
+					'done': False
+				    }
+				]
+				@app.route('/tasks',methods=['POST'])
+				def index():
+					if not request.json or not 'title' in request.json:
+						abort(400)
+					task = {
+					'id': tasks[-1]['id'] + 1,
+					'title': request.json['title'],
+					'description': request.json.get('description', ""),
+					'done': False
+				    	}
+					tasks.append(task)
+					return jsonify({'tasks':task}),201
+				if __name__=='__main__':
+
+	
+					app.run(debug=True)
+
+	Here, In this method some 'task' is defined that needs to be appended to the existing resource if all the conditions got true; To run this Program via 
+	CURL command, I need to use it as:
+				
+				curl -i -H "Content-Type: application/json" -X POST -d '{"title":"Read a book"}' http://localhost:5000/tasks
+
+
+	If the above program is giving you an error as "Method not Allowed":
+		Then Use this piece of Code:
+
+				import flask
+				from flask import abort,Flask,request,jsonify
+
+				app=Flask(__name__)
+				tasks = [
+				    {
+					'id': 1,
+					'title': u'Buy groceries',
+					'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+					'done': False
+				    },
+				    {
+					'id': 2,
+					'title': u'Learn Python',
+					'description': u'Need to find a good Python tutorial on the web', 
+					'done': False
+				    }
+				]
+				@app.route('/tasks')#methods=['GET', 'POST'])
+				def index():
+					task = {
+					'id': tasks[-1]['id'] + 1,
+					'done': False
+				    	}
+					tasks.append(task)
+					return jsonify({'tasks':tasks})
+				if __name__=='__main__':
+
+
+					app.run(debug=True)
+
+
+	The methods PUT<Updation of existing Resource> and DELETE can defined as:
+
+		<Using Flask>
+				@app.route('/tasks/<int:task_id>', methods = ['PUT'])
+				def update_task(task_id):
+				    task = filter(lambda t: t['id'] == task_id, tasks)
+				    if len(task) == 0:
+					abort(404)
+				    if not request.json:
+					abort(400)
+				    if 'title' in request.json and type(request.json['title']) != unicode:
+					abort(400)
+				    if 'description' in request.json and type(request.json['description']) is not unicode:
+					abort(400)
+				    if 'done' in request.json and type(request.json['done']) is not bool:
+					abort(400)
+				    task[0]['title'] = request.json.get('title', task[0]['title'])
+				    task[0]['description'] = request.json.get('description', task[0]['description'])
+				    task[0]['done'] = request.json.get('done', task[0]['done'])
+				    return jsonify( { 'task': task[0] } )
+
+
+		$ curl -i -H "Content-Type: application/json" -X PUT -d '{"done":true}' http://localhost:5000/tasks/2
+
+
+		<Using Flask>
+				@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['DELETE'])
+				def delete_task(task_id):
+				    task = filter(lambda t: t['id'] == task_id, tasks)
+				    if len(task) == 0:
+					abort(404)
+				    tasks.remove(task[0])
+				    return jsonify( { 'result': True } )
+
+	Securing a Restfull Web Service 
+		The easiest way to secure our web service is to require clients to provide a username and a password.
+		Normally, When we login to a site The browser stores our user-name and password and create a session for us,and storing our username and password 
+		is violating the Restfull web service's stateless feature
+	
+
+	For that security feature, We will use  "Flask-HTTPAuth".
+			pip install flask-httpauth
+
+
+		Let's say, I only want that my web service can only be accessible with user-name as Talat and Password as Parwez, 
+
+		
+
+				import flask
+				from flask import Flask, jsonify, abort,make_response
+				from flask.ext.httpauth import HTTPBasicAuth
+				auth=HTTPBasicAuth()
+				app=Flask(__name__)
+				tasks = [
+				    {
+					'id': 1,
+					'title': u'Buy groceries',
+					'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+					'done': False
+				    },
+				]
+				@app.route('/<int:task_id>',methods=['GET'])
+				@auth.login_required
+				def index(task_id):
+					task=filter(lambda t:t['id']==task_id,tasks)
+					if len(task)==0:
+						return abort(404)
+					return jsonify({ 'tasks': task })
+
+				@auth.get_password
+				def get_password(username):
+				    if username == 'miguel':
+					return 'python'
+				    return None
+
+				@auth.error_handler
+				def unauthorized():
+				    return make_response(jsonify( { 'error': 'Unauthorized access' } ), 401)
+
+				if __name__=="__main__":
+					app.run(debug=True)
+

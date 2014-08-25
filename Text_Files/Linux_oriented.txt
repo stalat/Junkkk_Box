@@ -1,0 +1,247 @@
+To find a string inside every file in a folder use:
+	grep -irsl "string_to_be_searched" *
+
+If I want to find the location of a file whose(file) is completely known to me, Then I can use:
+	locate "filename"
+
+To check whether your system is 32 bit or 64 bit, check with:
+	
+	uname -a 
+
+If your system is 32-bit; then it'll show as:
+	i686 i686 i386 GNU/Linux
+
+If your system is 64-bit; then it'll show as:
+	x86_64 x86_64 x86_64 GNU/Linux
+
+To Install a repo. into your system, How I can do that:???
+
+	Suppose, I need to install terminator terminal on my system then I will have to have a need of RPMForge Repository; to get this repo.
+
+		sudo wget http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.i686.rpm
+		sudo rpm -Uvh rpmforge-release-0.5.2-2.el6.rf.i686.rpm
+	By these commands Repo. has been installed. They will be installed in ./etc/...
+		then install any package:
+		sudo yum install terminator
+
+To check which process is under root and which is in under normal user:
+	
+	ls -lart
+
+To change the ownership of the folder named Friends to stalat use :
+	
+	sudo chown -R stalat:stalat ./Friends	<Changing te ownership>[-R is used to change the ownership of folders inside folders]
+	sudo chmod -R ugo ./Friends		<Giving the permission>
+
+
+If I want to check the code of python pre-defined methods, Then they can be look over into:
+		/usr/lib/python2.6 ... and their code can be seen as : z+M, z+R, z+O
+
+In python seq 10 will generate the sequence from 1 to 10, seq 10 20 will generate the sequence from 10-20
+
+cat q.txt w.txt will append the item as vertically, first q's and then w's
+
+If I want to append the items horizontally, Then I'll have to use paste command as:
+		paste q.txt w.txt
+
+If I want to merge the commands in a single statement then I can use it by using back tick(`) as:
+		echo `paste q.txt w.txt` 
+
+If I want to make the sequence as in matrix form, then I can use it as:
+		seq 0 9 | xargs -n 5(number of columns)
+
+If I want to locate the location of a file, the it can be done as:
+		locate "filename"
+
+If I want to have a string splitted by specified character then It can be used by awk commands as:
+		grep "*\.mp3" | awk -F'="' '{print $NF}' | awk -F'">' '{print $1}' | wc -l
+			[-F'="' will split having ="] 
+			[$NF the last column of the string]
+			[$1 $2 the column no.1 no.2 after splitting]
+			[wc -l number of records]
+
+grep -v ".mp3"  [it will display all the things except .mp3]
+grep -v "\.mp3"	[it will take the .(dot) as the part of the searched string]
+ifconfig
+internetip
+ps aux
+ps aux|grep "string"
+F6 [To go to URL bar directly]
+.source/bin/activate [To activate the things]
+find . -name "filename" [will find from the current folder]
+Ctrl+Alt+L [to lock the screen]
+Ctrl+Shift+T [to open a new tab in terminal]
+Alt+f2	[Run application]
+Ctrl+Shift+N	[New gnome Terminal]
+Ctrl+Shift+W	[Close a tab in gnome terminal]
+Ctrl+Page_Up/Page_Down	[Switch over tabs in gnome terminal]
+
+TMUX:
+		ctrl+z
+		ctrl+z+% [To open a tab vertically]
+		ctrl+z+" [To opena a tab horizontally]
+		tabnew "file_name" [To open another tab in single Terminal screen]
+		:shell [To open shell without closing the vim]
+		ctrl+e [To move downwards the vim editor screen]
+		<+m,n [To move back and forth in the terminal]
+		ctrl+z+release+<uparrwow,downarrow,rightarrow,leftarrow> [To make movement in terminal screens]
+
+VirtualEnv:
+	
+	VirtualEnv is used to install packages and use them without interrupting the system python packages.
+	The commands to install the VirtualEnv without sudo passwords are:
+		
+	    $ mkdir ~/bin
+	    $ mkdir -p ~/lib/python2.6
+	    $ mkdir -p ~/local/lib/python2.6/dist-packages
+	    $ wget http://peak.telecommunity.com/dist/virtual-python.py
+	    $ python virtual-python.py --no-site-packages
+	    $ wget http://peak.telecommunity.com/dist/ez_setup.py
+	    $ ~/bin/python ez_setup.py 
+	    ~/bin/python ez_setup.py -U setuptools
+	    /home/admin/bin/easy_install virtualenv
+	    /home/admin/bin/virtualenv . --no-site-packages
+	    ./source/bin/activate
+
+Pip:
+	
+	Pip is compatible with Python2.6 and can be used to install the packages that are not in our system
+		
+		pip install "package _name"
+
+
+If I want to login into another system then use:
+		
+		ssh username@ip_adress
+		password:____________
+
+
+ShellScript:
+
+		If the shell script name is "dm_identification_custom.sh",
+	Then we can make it executable by executing this command:
+		
+		chmod +x dm_identification_custom.sh
+	
+	and after making this shell script as executable:
+		./dm_identification_custom.sh 
+
+
+If you want to print only one line from the file; then use:
+
+	cat DEPENDENCIES.TXT | grep -i "\.db" > xyz.txt
+
+some more git commands that are used in speficied Cases:
+		git branch --set-upstream "branch_name" [The header will move to Branch "branch_name"]
+		git branch -D "branch_name" [It will delete the Branch "branch_name"]
+
+If you want to log a repository from the another directory then you can use:
+
+		git --git-dir=/repo/path/.git log -3 --pretty=oneline
+
+If you want to list the number of items in a particular directory; then use: 
+
+		#print len([name for name in os.listdir(t)])		#where t=location of the folder you want to lookup.
+		#print os.listdir(t)
+
+If you want to move to a particular directory via python code; then use:
+
+		#os.chdir("/stalat/Hello/Talat/Parwez/Hi")
+
+I want to open a pdf file by linux-terminal, use:
+		gnome-terminal "filename.pdf"
+
+
+I want to check the number of lines/words/character/bytes in a file; then use:
+		wc -<option>
+
+With Single-user-mode, remote logins are disabled, networking is disabled, and most daemons are not started used for system maintenance only; 
+To make the system run on single-user-mode; Add 1 or single @last as:
+		kernel /vmlinuz-2.6.27.21-170.2.56.fc10.i686 ro root=/dev/hda5 rhgb quiet 1
+		kernel /vmlinuz-2.6.27.21-170.2.56.fc10.i686 ro root=/dev/hda5 rhgb quiet single
+
+Services in Linux can be started or stopped by going to /etc/init.d and stop/start after their name as:
+		/etc/init.d/httpd stop
+		/etc/init.d/httpd start
+		/etc/init.d/httpd restart
+		/etc/init.d/httpd reload
+
+ To check the previous and current runlevel of system use:
+		#runlevel 			--> N 5 (N = Previous runlevel and 5 = Current runlevel)
+
+If I want to shut down the system, Then time limit and options can also be used, The possible solutions are:- -f, -h, -k, -r, -F
+		shutdown <option> <time>
+
+
+
+				LINUX INSTALLATION AND PACKAGE MANAGEMENT
+
+The LILO is a small utility designed to load the Linux kernel into memory and start it.
+The LILO prompt is designed to allow to select from multiple kernels or OS installed on your system.
+GRUB also do the same work as BOOT LOADER
+
+RPM(Red Hat Package Manager):
+			     Most popular methods for the distribution of software for Linux and is installed by default on most distributions.
+					rpm -i <package_name> 				#To install new packages.
+					rpm -U <package_name>				#Upgrade the Installed package.	  
+					rpm -e <package_name>   			#Uninstall the package
+			     Before uninstall the package, I need to check the dependencies to other modules; So better to remove them by 
+					rpm --nodeps
+
+
+YUM(Yellowdog Updater Modified): Installing updating and removing packages. --> /etc/yum.conf
+					yum install <package_name>			#Install a package on system
+					yum erase <package_name>			#Remove a package from system
+					yum update <package_name>			#Update a package on system
+					yum list <package_name>				#list a group of packages on system
+					yum search <package_name>			#search package details for the given string
+					yum info <package_name> 			#Will give you all the information about the installed package.
+
+
+UNIX AND LINUX COMMANDS:
+			It's the job of shell to provide the cmd and to interpret the commands.
+			Bash(Bourne Again Shell) is a GNU version of shell
+
+
+______________________________________________________________________________________________________________________________________________________________________
+---------------------------------------------------------------COMMANDS-----------------------------------------------------------------------------------------------
+______________________________________________________________________________________________________________________________________________________________________
+
+echo 			echo PS1					#to print the content
+PATH			echo $PATH					#The less program is located in the directory /usr/bin. Placing /usr/bin in your PATH 										enables you to execute less by simply typing less rather than the explicit /usr/bin/less.
+export			export "shell_variable"				#Make a shell variable as Environment variable
+
+
+For the bash to excute the command, The command must be in any of the following:
+	A bash built-in command that is a part of bash itself
+	An executable program located in the path variable
+	An executable program whose filename I specified explicitely
+
+If I declare a variable my_var="Hello"--> echo $my_var, It will show "Hello", But If'll go to new bash by typing bash and do there as echo $my_var, then it won't show any 
+output because I'm in new shell and my_var was declared in the old shell , So to make my_var to be availabled to each shell, I'll have a need to make the my_var as enviro-
+-nment variable So It can be used in other shell also, 
+
+set -o			$set -o 					#Will marks the variable that are modified or created.
+
+ls -l *.txt		$ls -l *.txt					#Will give all the files ending with ".txt" <* --can be anything>
+
+
+Occassionally I may need to run the command that is not in my path and not built in shell. Then It'll be best If I can add the direcotry to my path that contains the specific commands.
+
+For Loop:
+			var1=1,var2=2,var3=3
+			for var in $var1,$var2,$var3
+			do	
+			echo $var
+			done
+Executing more than one command in a single line by command separator ';':
+			ls;ps
+
+History of Commands:
+			command history
+			echo $HISTSIZE					#How much history you'll see 
+
+!!									#bang-bang, refers to the most recent command
+!n									#Refers to the nth command from the history 
+!string									#refers to the recent command started with the string
+^string1^string2							#refers to the last command and change the string1 with string2
