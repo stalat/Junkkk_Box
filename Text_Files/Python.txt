@@ -1,0 +1,683 @@
+Code refactoring is restructuring the existing code without changing its external behaviour.
+
+If I want to check whether the sequence container is empty or not Simply Use:
+	bool(sequence)
+
+exec takes statements<won't give values> and eval takes expressions<will return values>
+
+Python programs are run by two methodologies:
+	Interactive mode (>>> chevron prompt)
+	Script mode (save a file and run that .py file)
+
+<INTEGER>
+Simple Integer Functions:
+	x=10
+	type(x)				# <type 'int'>
+	x**2				#100<Exponent Power>
+	hash('Python')			#Return the hash value for word
+	round(2.554)
+	trunc(2.66)
+	abs(number)			#Return the absolute value for the number
+	max(sequence)			#Return the Maximum Value from the sequence
+	min(sequence)			#Return the Minimum value from the sequence
+	>>>1,00,000			#(1,0,0) Python will take it as comma separated Integers.	
+	>>>z=0123			#Octal Value
+	>>>z=0128			#Syntax Errors
+	
+<COMPLEX>
+Simple Complex Number:
+	x=5i+6j				# Complex Number
+	dir(x)
+
+	real(x)
+	imag(x)
+
+<STRING>
+Simple Strings:
+	s1="Talat"
+	s2="Parwez"
+	s1+s2
+	s1*5				#"TalatTalatTalatTalatTalat"
+	len(s)				#5
+	s=" I went there "	
+	s.lstrip()			#"I went there	"
+	s.rstrip()			#"  I went there"
+	s.strip()			#"I went there"
+	'I' in s			#True
+	s="Hello Talat"		
+	s.split()			#["Hello","Talat"]
+	list(s)				#['T','a','l','a','t']
+	set(s)				#(['a','t','T','l'])
+	id(s)
+	string.letters
+	string.lowercase
+	string.uppercase
+	string.punctuation
+	string.whitespace
+	string.swapcase()
+	ord('A')			#will print the ASCII value
+	chr(65)				#will print the ordinal value of ASCII value
+	s='xxyy'			
+	s.replace('x','786')		#will replace the x with '786'
+	s.find('y')			#Return the first occurance Index of 'y'
+	s.rfind('y')			#Return the Last occurance index of 'y'
+	s.title				#Will Capitalize the first letter of the string.
+	s.rjust(10,' ')			#Will shift the string to 10 characters right.
+	s.ljust(10,' ')			#Will shift the string to 10 characters left
+	len('\t')			#1
+	len(r'\t')			#2
+
+Reversing the string:
+	s='Hello'
+	s[::-1]				#It will reverse the string as "olleH"
+
+Joining the string:
+	w=["I","am","Good"]
+	' '.join(w)
+		
+
+Range Function:
+	range(10)			#[0,1,2,3,4,5,6,7,8,9]
+	range(2,10)			#[2,3,4,5,6,7,8,9]
+	range(2,10,2)			#[2,4,6,8]
+	range(10,2)			#[]
+	range(10,2,-1)			#[10,9,8,7,6,5,4,3]
+
+<LIST>
+Simple List Functions:
+	fruits=['a','b','c']
+	fruits[0]			#'a'
+	fruits.append('d')		#['a','b','c','d']
+	fruits.index('a')		#0
+	fruits.index('a',1)		#It will find the element 'a' from index 1
+	fruits_copy=fruits[:]		#will copy the whole list<shadow copy>
+	
+
+To delete an object:
+	del "object_name"
+
+Loopings in List:
+	for i in fruits:
+		print i,		#a b c d 
+	
+	for i in range(len(fruits)):
+		print i,		#0 1 2 3
+
+	for i in enumerate(fruits):
+		print i,		#(0,'a')(1,'b')(2,'c')(3,'d')	
+
+	for i in enumerate(fruits):
+		print i[0],i[1]		#0 a 1 b 2 c 3 d
+
+	for idx,item in enumerate(fruits):
+		print idx,item		#0 a 1 b 2 c 3 d 
+
+	fruits.pop			#remove last inserted item
+	fruits.pop(2)			#remove location specified item
+	fruits.remove('a')		#specified item get removed
+	fruits.append('b')		#will insert into last of list
+	fruits.insert(1,'b')		#will insert into specified Location
+	fruits[0]='a'
+	del l[0]			#will remove only 'a'
+	l1=['a','b']
+	l2=['c','d']
+	l3=l1+l2			#['a','b','c','d']
+	l2.extend(l1)			#['c','d','b','a']
+
+Sorting of a List:
+	l1.sort()			#will sort the list
+	sorted(l)			#return the sorted item but didn't sort the actual list
+
+Reversing a list:
+	l1.reverse()			#will reverse the given list
+	reversed(l1)			#return the reversed item's list but didn't reverse the actual list
+
+Undoing the sorted list:
+	random.shuffle(l)		#Undo the sorted list
+
+Counting the List:
+	l1.count('item')		#will give the number of occurances of itemn in the sequence
+
+List Comprehension:
+	for the given sequence if I want to iterate over the sequence Then I'll preferrably chose the Traditional for Loop, 
+	But better to use the List Comprehension As It will reduce the code.
+		x=[item for item in sequence]
+		x=[item for item in sequence condition]
+		x=[item for element in sequence for item in element ]
+		first one is outer loop and second one is inner loop.
+
+<TUPLE>
+simple tuple functions:
+
+	tuple(sequence)
+	t=x,y=10,20			#x,y values will be given to t as (x,y) in form of tuple
+	t[i]				#indexing can be performed on tuples
+	t=(1,)				#A tuple with a single element
+
+<DICTIONARY>
+<Dictionaries are the unordered sequence>
+
+	d={}				#Empty dictionary
+	d={1:'a',2:'b'}			#Key-Value Pairs
+	d.keys()			#Return the Keys in a List
+	d.values()			#Return the values in a List	
+	d.items()			#Return the (key,value)
+	q=d.get(key)			#will return the Value for the Key
+	q=d.get(key,'Message')		#Will return the Message if value for key was not returned
+	d[i][j]				#Dictionaries can be indexed
+	d.has_key(key)			#Will return True or False if key was found or not
+	d.update(d1)			#It will update the d by adding key-values of d1
+
+
+<FILE OPERATION>
+	
+	Make a text File as text.txt,
+	data='Some String'
+	f=open('test.txt','mode')
+	f.read()
+	f.readlines()
+	f.write('data')
+	f.writelines('data')
+	f.append('data')
+	f.read(30)			#will read first 30 characters
+	f.read(30)			#next 30 characters
+	f.seek(0)			#will move the pointer to 0th index
+	f.tell()			#will tell the pointer's position
+	f.flush()
+
+<Exception Handling>
+	try:
+		//some_Operation
+	except:
+		//Print this error
+
+	It will try to perform operation defined in try block and if it failed then will print the error what you've defined in your except
+	
+
+	1)	try:
+			//some_Operation
+		except ErrorType as e:
+			//print e error
+
+	this is like if-else block; Try to perform some opration and the interpreter is not able to perform those oprations defined in try 
+	block then go to except(else) block; If It catches the exception defined in except block the go to except execution;
+
+	for example:
+		
+		try:
+			f=open('test.tx')
+			print f.read()
+			f.close()
+		except ValueError as E:
+			print "Error has been Caught",E
+
+	It will try to perform all oprations defined in try block and if it catches the ValueError, Then will print the eror message
+
+
+The Last printed expression will be assigned to the variable _ (underscore)
+
+<SETS>
+	These are the lists without duplication
+	They cannot be accessed by indexing
+	l=[0,1,2,3,1]
+	set(l)--> set([0,1,2,3])
+	s=set([1,2,3,4])
+	s.add(9)			#Will add '9'		
+	s.discard(1)			#will discard '1' from the sequence
+	s.union(s1)
+	s.intersection(s1)
+	s.difference(s1)
+	str="talat"	
+	set(str)			#set(['a', 't', 'l'])
+	s1.issubset(s2)
+	s1.issuperset(s2)
+
+Methods without self are considered as Global Functions
+Old methods are hidden by redefinition
+
+<MRO>	Method Resolution Order
+	Will look for the element firstly in <current><parent><grand-parent><object>
+	mro[1]--> Runtime Error
+	mro[2]--> Standard Error 
+	mro[3]--> Exception Error
+	mro[4]--> Base Exception Error
+
+<MAP>
+	map(funtion_name_to_be_mapped,sequence)
+	output form--> list []
+
+<FUNCTION>
+	object is the upper most class in python.
+	issubclass(int,object)--> will return True
+	functions have gunction definition and defined by def keyword, here is the most basic syntax of the Python function
+		
+1)		def foo():	
+			return 1
+		foo()
+			1
+
+_____________________________________________________________________________________________________________________________________________________________
+
+2) 		a="This is a global string"
+		def foo():
+			print locals()
+		print globals()		#will print {'a': 'Ths is global String', '__builtins__': <module '__builtin__' (built-in)>, '__package__': None, '__name__': 						'__main__', 'foo': <function foo at 0xb76a0d14>, '__doc__': None}
+
+		foo()			#will print {}
+
+_____________________________________________________________________________________________________________________________________________________________
+
+3)		a="This is a global string"
+		def foo():
+			a="This is a Local string"
+			print locals()
+		foo()			#will print This is a local string
+		a			#wll print a as it was before calling the function
+		print globals()		#will print a as it was before caaling the function
+
+_____________________________________________________________________________________________________________________________________________________________
+
+4)		def foo(x):
+			print locals()
+		foo(1)			#will print {'x':1}
+
+_____________________________________________________________________________________________________________________________________________________________
+
+5)		def foo(x,y=0):		#function with default parameters
+			return x+y
+		foo(1,2)
+		foo(1)
+_____________________________________________________________________________________________________________________________________________________________
+
+6)		def foo(x,y):
+			return x+y
+		foo(y=2,x=4)		#function with Named arguments
+_____________________________________________________________________________________________________________________________________________________________
+
+7)	Functions can be passed as an Arguments in Python. 
+		def add(x,y):
+			return x+y
+		def sub(x,y):
+			return x-y
+		def apply(func,x,y):
+			return func(x,y)
+		apply(add,4,5)
+		apply(sub,4,5)
+		_____________________________________________________________________________________________________________________________________________________________
+
+8)	Outer and Inner function
+		def outer():
+			x=1
+			def inner():
+				print x
+			return inner				//when you put parentheses around it the function gets executed whereas if you don’t put parenthesis around 									  it then it can be passed around and can be assigned to other variables without executing it.
+		foo=outer()
+		foo			#function inner at one position
+		foo()			#It will return the value from inner function
+
+
+_____________________________________________________________________________________________________________________________________________________________
+
+9)	Variable number of Arguments
+		def foo(*args):
+			print args			// It will print the recieved arguments in form of Tuples
+
+	Another use of *(asterisk):
+		l=[1,2]
+		def foo(x,y):
+			return x+y
+		foo(l[0],l[1])				//Not a good Manner
+		foo(*l)					//It will take all the elements of the list to the called function
+_____________________________________________________________________________________________________________________________________________________________
+
+10) 	Variable Number of Arguments in Key-Value pair
+		def foo(**kwargs):
+			print kwargs			//will return {x:1,y:2}
+		foo(x=1,y=2)
+
+		d={'a':1,'b':2}
+		def foo(a,b):
+			return a+b	
+		foo(d['a'],d['b'])			//'3'  | Values will get added
+		foo(*d)					//'ab' | keys will get merged
+		foo(**d)				//'3'  | Values will get added
+_____________________________________________________________________________________________________________________________________________________________
+
+_____________________________________________________________________________________________________________________________________________________________
+
+<DECORATOR>
+	A decorator is just a callable that takes a function as an Argument and return a replacement function
+
+	def outer(some_func):				// will recieve the function
+		def inner():				// inner function that will modify the content of function recieved by outer function
+			value=some_func()+1		// The value that was returned by some_func() has been incremented by 1
+			return value			// Return the modified value
+		return inner				// Outer function will return inner to get it executed
+
+	def foo():					// function name will be passed to decorator
+		print "Now, Its going to execute the decorator"
+		return 1				// This value will be going to decorator
+
+	
+
+	How to execute this Program:
+		
+		t=outer(foo)				// outer will recieve foo function as an argument
+		t()					// it will have the value returned by inner function of decorator 'outer'
+
+
+
+	The another version to perform this program is:
+		@outer
+		def foo():
+			retun 1
+
+		foo()					// Will print the output returned by inner function of decorator 'outer'
+
+
+
+	Inner function wil always have the same arguments as the foo() function is recieving. 
+
+		def outer(some_func):
+			def inner(a,b):
+				print "The arguments recieved by functions are",a,b
+			return inner
+		@outer
+		def foo(a,b):
+			return a+b
+	
+
+	We can again return to the same function from where the decorator was called:
+		def outer(some_func):
+			def inner(*args,**kwargs):
+				print "The arguments recieved are:",args,kwargs
+				return func(*args,**kwargs)
+			return inner
+
+		@outer
+		def foo(x,y):
+			return x*y
+		
+
+		foo(1,2)
+
+<GENERATOR>
+
+	Normal functions return only a single value; But what if I want to get the next value and to continue over the whole return .... There I will use yield ... by which 		we can continue our looping from where we left.
+    Generator is a function that returns an object on which we can perform next() operation
+	Generators are a tool for creating iterators.They use to YIELD the data whenever they want to return the data
+	Each time the next() is called, Generator resumes from where it left-off
+
+
+	With generators, __iter__() and next() method got created automatically;
+	If In a method there is a yield keyword, Then It will automaticaaly be converted into generators.
+
+	We should have the ability to create the function which can yield(giving) the series of value instead of simply returning the single value
+	When a function is called, all the work done by function and stored in local variables is lost, A new call to the function creates 
+	everything from the scratch.
+	return implies that the function is returning control of execution to the point where the function was called.
+ 	"Yield," however, implies that the transfer of control is temporary and voluntary, and our function expects to regain it in the future.
+	Basically
+		"When we use return, The control goes to the calling function and all the work done by the function goes lost,
+		Now If I want to regain it again in the future, Will I be able to regain it? .... NO!!!"
+	So, Better to use YIELD <GENERATOR>
+
+		Functions that have the ability to do this, Will be called as Generators
+
+	Generators are like normal functions but whenever they need to generate the value, They dont return but yield them.
+		One value is generated from the generator, To get the next generated value, We use __next__() method 
+
+
+
+		def foo():
+			yield 1
+			yield 2
+			yield 3
+
+		o=foo()
+		o.next()
+		o.next()			
+		o.next()
+
+	When all the values are iterated, stopIteration happened
+
+		l=[1,2,3,4,5,6,7,8,9,,0,4,6,7,3]
+		def foo(seq):
+			for item in seq:
+				yield item
+	
+		elem=foo(l)
+		elem.next()
+
+
+<CLASS>
+	object.attribute								#[readable and writable also]
+	Attributes of an objects are readable/writable and deletable also:
+	
+	object.attribute=value
+	del object.attribute
+	
+		class MyClass:
+	   	"""A simple example class"""
+		i = 12345
+		def f(self):
+		    return 'hello world'
+
+
+	Here i and f are the attributes of the class and can be accessed as MyClass.i and MyClass.f
+
+	If you want to make an object of it the you need to define it as:	
+		
+		obj_name=class_name()
+
+	A class also have the magic method named as: __init__(self,arguments)
+	While instantiating a class(@time of creation of object), If we pass the arguments as:
+		
+		obj_name=class_name(arg1,arg2,...)
+
+	They will always be recieved by __init__ method.
+	
+
+		class A(object):
+			def __init__(self,x,y):
+				self.x=x
+				self.y=y
+		
+
+		t=A(1,2)
+		t.x				#1
+		t.y				#2
+
+	Object is passed as a self argument to the function and self., self., are used to bind all those things to that particular Object Instance.
+	One thing, Why self is used in every method of the class:
+	Because, When we say x=A(), Here ,,, Object is passed as an argument to the function.
+	Its is like 
+				
+				x.f()==MyClass.f(x)
+	
+	self is the object_name that is passed to function.
+
+
+
+		class A():
+			i=12345							#shared by all instances of the class
+			def __init__(self,name):
+				self.name=name				#shared by specific instance
+
+			
+
+		x=A()
+		x.i								#12345
+		x.foo("Talat")					#Talat 
+
+
+		class A():
+		name1="Poornima"
+		def __init__(self,name,age):
+		    self.name=name
+		    self.age=age
+		    self.name1="TP"
+        
+		x=A("Talat",22)					#Create the instance of class A
+		print x.age						#22
+		print x.name					#"Talat"	
+		print x.name1					#"TP"
+
+	If self with name1 was not given, then In lack of self keyword, name1 will not engaged with x object and will find to the upper most class. 
+	And will take the name1 as "Poornima".
+
+
+	If I want to derive a baseclass into derivedclass i.e. Inheritance Concept. The syntax for Inheritance is as follows:
+		
+		class derived_class(object,base_class):
+			//statements
+	
+	If the class is defined in another module, Then also it can be inherited as:
+		
+		class derived_class(object,module_name.base_class):
+			//statements
+
+
+	If some attribute is not found in the class<derived>; Then It'll move forward to the BaseClass in searching of that requested Attribute and 
+	Search for it goes on untill it finds the requested attribute.
+
+		current class--> parent class--> grand parent class--> Object class(Upper Most Class)
+
+	We can check whether the object is instance of the class or not as : isinstance(obj,class)
+	We can check whether the derived_class is subclass of base_class or not as: issubclass(derived_class,base_class)
+
+
+
+	Multiple Inheritance:
+		
+		class B(object):
+			name="Poornima"
+
+		class A(B):
+			def __init__(self,name,age):
+				#self.name=name
+				self.age=age
+				
+		x=A("Talat",22)
+		print x.age									#22
+		print x.name								#Poornima
+		print issubclass(A,object)
+
+
+	If there is another class that has the same attribute as name, Then which name to call, which class will be looking first,
+
+		So It will be taken according to: 	
+											parameter list of the class
+											class derived_class(base_class1,base_class2,base_class3)
+		First it will find in itself, then base_class1, base_class2, base_class3 and so on...
+
+
+	Look at the example:
+
+		class Employee:
+			pass
+
+		john = Employee() # Create an empty employee record
+
+		# Fill the fields of the record
+		john.name = 'John Doe'
+		john.dept = 'computer lab'
+		john.salary = 1000
+
+	class A():
+		def foo(self):
+			b=20
+			print b
+
+	a=A()
+	a.foo()					#20
+	hasattr(a,'b')			#False
+
+	class A():
+		b=10
+		def foo(self):
+		b=20
+		print b
+		print self.b
+
+	a=A()
+	a.foo()					#10 \n 20
+	hasttr(a,'b')			#True
+
+
+
+<ITERATORS>
+	
+	Iterators have the special property to keep the one value @once. 
+
+
+			number='123456789'
+			n=iter(number)
+			n.next(),n.next()..... after reaching out the last element, It will throw an StopIteration Exception.
+
+What If I want the name of the caller's method name in calling function name: 
+Like .... This method is recieving the argument and have an object of which Function or which function called it:
+
+		def method1(self):
+		    ...
+		    a = A.method2()
+
+		def method2(self):
+		    ...
+
+
+If I want to check whether the file is having syntax file or not:
+	We can use the py_compile site package.
+
+		python -m py_compile "filename"
+	
+	It will give you what syntax error you have and in which line
+
+	
+        
+
+Pickle Module: We can store any plain python object in a file and can get back it later.
+
+	l=[1,2,3,4]				#A list is defined
+	f=open("ll",'wb')			#A file is opened in a write binary mode
+	pickle.dump(l,f)			#It will store the "l" object to "f".
+	f.close()				#Close the file	
+	del l					#del the "l" object, now you won't be able to access l.
+	f=open('ll','rb')			#again open the file but in read binary mode
+	result=pickle.load(f)			#load the content whatever is stored in f, as you did stored the l to f so l will come to result
+	print result				#[1,2,3,4]
+
+
+Sys Module:Access to some variable used or maintained by Interpreter and to that function that interacts strongly with Interpreter.
+
+	For Example:
+		    This one is used to get the command line arguments and command line arguments are those arguments when we give at the run time as:
+		    python "file_name" arg1, arg2, arg3, ...
+		
+		    	from __future__ import print_function
+			import sys
+			print(sys.argv, len(sys.argv))
+
+
+			Now from the command prompt give the argumenmts as:
+				python "file_name" Hello
+				python "file_name" Hello Talat Parwez
+				python "file_name" Hello "Talat" Parwez
+				python "file_name" "Hello" Talat "Parwez"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

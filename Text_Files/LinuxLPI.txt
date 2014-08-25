@@ -1,0 +1,25 @@
+tLSB --> Linux Standard Base
+YUM --> YellowDog Updator Modified
+GNU --> GNU is not UNIX
+USB --> Universal serial Bus 
+OHCI --> Open Host Controller Interface <USB1.1 12 Mbps>
+UHCI --> Universal Host Controller Interface <USB1.1 12 Mbps>
+EHCI --> Enhanced Host Controller Interface <USB1.1 480 Mbps>
+BIOS --> Basic Input Output System. [Selection of Storage decices, Date and Time, Do all the operations which are required for System initialization which H/w to set etc.]
+
+
+[How to examine a running Linux's resource assignments using the /proc filesystems.]
+/proc filesystem --> while adding new h/w to existing linux system, I may wish to verify which resources are used by the existing devices and this Info. is stored in /proc, 			     The Kernel's repository.
+
+			<cat /proc/interrupts> 
+			<cat /proc/dma>
+			<cat /proc/ioports>
+
+
+lsusb is used to see how devices are physically attached to a linux system.
+
+			<lsusb>
+			<lsusb -t> 
+
+USB support was added to the linux kernel in 2.3.x development kernel series
+

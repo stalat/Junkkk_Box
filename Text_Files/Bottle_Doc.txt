@@ -1,0 +1,245 @@
+WSGI--> Web services gateway Interface.
+
+If I don't have the permissions to install the bottle, Then I can create a virtul env and can install later on :
+		
+		$virtualenv develop						# Create virtual environment
+		$source develop/bin/activate			# Change default python to virtual one
+		(develop)
+		$pip install -U bottle					# Install bottle to virtual environmen
+
+Single file module and no dependencies.
+
+to get the bottle in your project use:
+	sudo easy_install -U bottle
+
+Bottle runs with 2.5+ and 3.x
+
+Routing 
+Temlplates--> Supported for mako, Jinja2, and cheetah template.
+Utilities
+Server
+
+
+		from bottle import run, route, template
+		@route('/home/<name>')
+		def index(name):
+			return template("Hello, {{name}}",name=name)
+
+		run(host='localhost',port=8081)
+
+@route is the url, on call of which the associated function to that route will be called.
+
+
+		@route('/home/<name>/<age>')
+		def index(name, age):
+			return template('<b>Hello {{name}} your age is {{age}}</b>', name=name, age=age)
+
+		run(host='localhost',port=8081)
+
+If I want in the above example that age should be passed as int only, Then I can apply filter on that:
+	
+		@route('/home/<name>/<age:int>')
+		def index(name, age):
+			return template('<b>Hello {{name}} your age is {{age}}</b>', name=name, age=age)
+
+		run(host='localhost',port=8081)
+
+
+int: 
+float:
+path:path can be given
+re:regular expressions			<name:re:[a-z]+> 		#Two filters are applied here.First It should be regular expression, Second it should be of 										alphabetical type.
+
+
+HTTP Request Methods:
+	GET is default for all routes with no other method specified.
+	If we want to use other methods, we need to add "method" arguments to route.
+	
+	Or we can make a use of these methods as a decorators.
+		@get()
+		@post()
+		@put()
+		@delete() 
+
+The POST method is used for HTML form submission.
+
+If I want to have a username textbox and password textbox, Then I can use the method as:
+
+
+		from bottle import get, post, request, run
+
+		@get('/login')						#@route('/login',method='GET')
+		def login():
+			return '''
+			<form action="/do_login" method = "post">			#The values will go to called method as a request and we can get the values of 												varaible name from request.forms.get("name")
+				Username: <input name ="username" type="text"/>
+				Password: <input name ="password", type="text"/>
+				<input value = "login" type="submit"/>
+				'''
+
+
+		@post('/do_login')					#@route('do_login',method="POST")
+		def post_login():
+			username = request.forms.get('username')
+			password = request.forms.get('password')
+			if check_login(username, password):
+				return "Dear ", username,  " you're an authorized user"
+			else:
+				return "Dear", username, "Authentication Failure"
+
+
+		def check_login(username, password):
+			if username and password:
+				return True
+			else:
+				return False
+
+		run(host='localhost',port=8081, debug=True)
+
+If I want to call a template on clicking some event then it will be taken as:
+		import static_file
+		return static_file('filename.html',root='pa/th/')		
+		return static_file('index.html',root='templates/template_7/')
+
+
+
+If error came, Then I can also show the customized message:
+		from bottle import error
+		@error(404)
+		def c_error(any_argument):
+			return "<h3>The page is under construction</h3>"
+
+
+Generating Content: What kind of Data I am returning from the application.
+					Usually we return:
+
+Dictionaries							#automatically converted into json strings
+Empty Strings/false Value/none
+Unicode strings							#automatically encoded with the codec specified in Content_Header type
+Byte strings							#Bottle returns strings as a whole (instead of iterating over each char) and adds a Content-Length header based on the string length
+Instances of HTTPError
+Instances of HTTPResponse
+File Objects							#Everything that has a .read() method is treated as a file or file-like object
+Iterables and Generators
+
+
+Content-Type header decides how to encode the unicode strings;This header is set default to text/html,
+We can change it to another encoding schemes by using two methods:
+	
+		from bottle import response
+		@route('/login')
+		def foo():
+			reponse.charset='ISO-8859-15'
+			return "This will be sent as This kind of response"
+
+			response.content_type='text/html; charset=latin9'
+
+Static Files: To return the file objects<html,js,etc>.
+
+MIME TYPE:--> Internet programs such as Web servers and browsers all have a list of MIME types, so that they can transfer files of the same type in the same way, no matter 		      what operating system they are working in.So to serve the files we use static_file() because It automatically guesses a MIME type.If we want automatically
+	      guessing shoudln't happen, We can pass a Custom MIME type.
+
+	HTTP Errors and Redirects: The abort() function is a shortcut for generating HTTP error pages. If I want that the user shouldn't be accessible to the particular 	 page. Then 
+				   I can use abort() as:
+		
+				from bottle import abort, route
+				@route('/restricted')
+				def restricted():
+				    abort(401,"Sorry, Access Denied")
+
+
+	If I want that user shouldn't be on this page, and should be return to the some other page; I can use it as:
+
+				from bottle import redirect
+				@route('wrong_url'):
+				def wrong():
+				    redirect('right_url')
+
+
+	All exceptions other than HTTPError and HTTPResponse will result in a 500 Internal Server Error response, So they won't crash my WSGI server.
+
+
+The Response Object:
+		    Response metadata such as HTTP status code, response headers and cookies are stored in an object called response
+
+
+	Status code:- 200(OK), 404(Not Found), 401(Access denied)
+	Response Headers:- It takes two parameters, a header name and a value
+		
+			response.set_header('Content-Language','en')
+
+			   To add an additional header, We need to use 
+		
+			response.add_header('Set-Cookie','name=value')
+			response.set_header('Set-Cookie','name2=value2')
+
+
+	Cookie:- A cookie is a piece of text that's been stored in user's browser profile, 
+
+		getting previously defined cookie
+			response.get_cookie('visited')
+		setting a new cookie
+			response.set_cookie('visited','yes')
+
+
+	While setting a cookie, you can set the various attributes as:
+		max_age	<Maximum age in seconds>
+		expires	<a datetime object timestamp>
+		domain	<domain that is allowed to read the cookie>
+		path	<limit the cookie to a given path>
+		secure	<limit the cookie to HTTPS connections>
+		httponly <prevent the client side-js to read the cookie>
+
+
+	Now, Time to set the cookie and time to get the cookie:
+	
+		def login():					#We are sending the data (username and password that can be get by called method)
+		    return '''
+		    <form action="/do_login" method = "POST">
+			Username: <input name ="username" type="text"/>
+			Password: <input name ="password", type="text"/>
+			<input value = "login" type="submit"/>
+			'''
+
+		@route('/do_login', method='POST')		#It will recieve the data and will set the cookie
+		def post_login():				
+		    username = request.forms.get('username')
+		    password = request.forms.get('password')
+		    if check_login(username, password):
+			response.set_cookie('account', username, secret='some-secret-key')	#It is setting the cookie.
+			return template("<p>Welcome! {{name}} you are now logged in</p>", name=username)
+		    else:
+			return "Login Failed"
+
+		@route('/restricted')
+		def restricted_area():
+		    username = request.get_cookie('account', secret='some-secret-key')		#It is getting the cookie
+		    if username:
+			return template("Hello {{name}}!!! Welcome Back", name= username)
+		    else:
+			return "you are not logged in... Access Denied"
+
+
+		Here, If we set the cookie then it can be accessed by restricted method, until I clear the cache of the browser. So, set_cookie() will set cookie and 			get_cookie()
+		is used to get the value from the cookie.
+
+
+The Request Object:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

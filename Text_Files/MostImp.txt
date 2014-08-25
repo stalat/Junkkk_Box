@@ -1,0 +1,130 @@
+If I want to check the code of python pre-defined methods, Then they can be look over into:
+		/usr/lib/python2.6 ... and their code can be seen as : z+M, z+R, z+O
+
+In python seq 10 will generate the sequence from 1 to 10, seq 10 20 will generate the sequence from 10-20
+
+cat q.txt w.txt will append the item as vertically, first q's and then w's
+
+If I want to append the items horizontally, Then I'll have to use paste command as:
+		paste q.txt w.txt
+
+If I want to merge the commands in a single statement then I can use it by using back tick(`) as:
+		echo `paste q.txt w.txt` 
+
+If I want to make the sequence as in matrix form, then I can use it as:
+		seq 0 9 | xargs -n 5(number of columns)
+
+If I want to locate the location of a file, the it can be done as:
+		locate "filename"
+
+If I want to have a string splitted by specified character then It can be used by awk commands as:
+		grep "*\.mp3" | awk -F'="' '{print $NF}' | awk -F'">' '{print $1}' | wc -l
+			[-F'="' will split having ="] 
+			[$NF the last column of the string]
+			[$1 $2 the column no.1 no.2 after splitting]
+			[wc -l number of records]
+
+grep -v ".mp3"  [it will display all the things except .mp3]
+grep -v "\.mp3"	[it will take the .(dot) as the part of the searched string]
+ifconfig
+internetip
+ps aux
+ps aux|grep "string"
+F6 [To go to URL bar directly]
+.source/bin/activate [To activate the things]
+find . -name "filename" [will find from the current folder]
+Ctrl+Alt+L [to lock the screen]
+Ctrl+Shift+T [to open a new tab in terminal]
+Alt+f2	[Run application]
+Ctrl+Shift+N	[New gnome Terminal]
+Ctrl+Shift+W	[Close a tab in gnome terminal]
+Ctrl+Page_Up/Page_Down	[Switch over tabs in gnome terminal]
+
+TMUX:
+		ctrl+z
+		ctrl+z+% [To open a tab vertically]
+		ctrl+z+" [To opena a tab horizontally]
+		tabnew "file_name" [To open another tab in single Terminal screen]
+		:shell [To open shell without closing the vim]
+		ctrl+e [To move downwards the vim editor screen]
+		<+m,n [To move back and forth in the terminal]
+		ctrl+z+release+<uparrwow,downarrow,rightarrow,leftarrow> [To make movement in terminal screens]
+
+VirtualEnv:
+	
+	VirtualEnv is used to install packages and use them without interrupting the system python packages.
+	The commands to install the VirtualEnv without sudo passwords are:
+		
+	    $ mkdir ~/bin
+	    $ mkdir -p ~/lib/python2.6
+	    $ mkdir -p ~/local/lib/python2.6/dist-packages
+	    $ wget http://peak.telecommunity.com/dist/virtual-python.py
+	    $ python virtual-python.py --no-site-packages
+	    $ wget http://peak.telecommunity.com/dist/ez_setup.py
+	    $ ~/bin/python ez_setup.py 
+	    ~/bin/python ez_setup.py -U setuptools
+	    /home/admin/bin/easy_install virtualenv
+	    /home/admin/bin/virtualenv . --no-site-packages
+	    ./source/bin/activate
+
+Pip:
+	
+	Pip is compatible with Python2.6 and can be used to install the packages that are not in our system
+		
+		pip install "package _name"
+
+Bottle:
+	
+		Bottle is a file that will be imported to our working .py file and if we want to display a particular 
+		web page on triggering of some function then the page path will be defined in [route].
+		
+			route('/home/profile')
+			def foo():
+				return "This is your Profile Page"
+
+If I want to login into another system then use:
+		
+		ssh username@ip_adress
+		password:____________
+
+
+ShellScript:
+
+		If the shell script name is "dm_identification_custom.sh",
+	Then we can make it executable by executing this command:
+		
+		chmod +x dm_identification_custom.sh
+	
+	and after making this shell script as executable:
+		./dm_identification_custom.sh 
+
+
+RuleSet:
+
+	select * from sre_idpool order by runlog_idn desc
+
+
+If you want to print only one line from the file; then use:
+
+	cat DEPENDENCIES.TXT | grep -i "\.db" > xyz.txt
+
+some more git commands that are used in speficied Cases:
+		git branch --set-upstream "branch_name" [The header will move to Branch "branch_name"]
+		git branch -D "branch_name" [It will delete the Branch "branch_name"]
+
+If you want to log a repository from the another directory then you can use:
+
+		git --git-dir=/repo/path/.git log -3 --pretty=oneline
+
+If you want to list the number of items in a particular directory; then use: 
+
+		#print len([name for name in os.listdir(t)])
+		#print os.listdir(t)
+
+If you want to move to a particular directory via python code; then use:
+
+		#os.chdir("/stalat/Hello/Talat/Parwez/Hi")
+
+
+
+
