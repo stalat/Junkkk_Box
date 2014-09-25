@@ -66,6 +66,10 @@ Simple Strings:
 	s.ljust(10,' ')			#Will shift the string to 10 characters left
 	len('\t')			#1
 	len(r'\t')			#2
+	s.count(g)
+	s='xyz'
+	max(s)				#will return z
+	s.startswith('x')		#Will return True
 
 Reversing the string:
 	s='Hello'
@@ -354,15 +358,15 @@ ________________________________________________________________________________
 			return value			// Return the modified value
 		return inner				// Outer function will return inner to get it executed
 
-	def foo():					// function name will be passed to decorator
-		print "Now, Its going to execute the decorator"
+	def some_func():				// function name will be passed to decorator
+		print "Now, Its going to decorator"
 		return 1				// This value will be going to decorator
 
 	
 
 	How to execute this Program:
 		
-		t=outer(foo)				// outer will recieve foo function as an argument
+		t=outer(some_func)			// outer will recieve some_func function as an argument
 		t()					// it will have the value returned by inner function of decorator 'outer'
 
 
@@ -384,7 +388,7 @@ ________________________________________________________________________________
 			return inner
 		@outer
 		def foo(a,b):
-			return a+b
+			pass
 	
 
 	We can again return to the same function from where the decorator was called:
@@ -410,7 +414,7 @@ ________________________________________________________________________________
 
 
 	With generators, __iter__() and next() method got created automatically;
-	If In a method there is a yield keyword, Then It will automaticaaly be converted into generators.
+	If In a method there is a yield keyword, Then It will automatically be converted into generators.
 
 	We should have the ability to create the function which can yield(giving) the series of value instead of simply returning the single value
 	When a function is called, all the work done by function and stored in local variables is lost, A new call to the function creates 
@@ -430,14 +434,17 @@ ________________________________________________________________________________
 
 
 		def foo():
-			yield 1
-			yield 2
-			yield 3
+			1.print "I am in First Yield"
+			2.yield 1
+			3.print "I am in Second Yield"
+			4.yield 2
+			5.print "I am in Third Yield"
+			6.yield 3
 
 		o=foo()
-		o.next()
-		o.next()			
-		o.next()
+		o.next()			#It will go to line 1 and start execute untill the first yield is reached
+		o.next()			#It will go to the immediate next line of the yield where it left; Won't start from line 1 but from 3
+		o.next()			#It will go the line where the previous yield was left off.
 
 	When all the values are iterated, stopIteration happened
 
