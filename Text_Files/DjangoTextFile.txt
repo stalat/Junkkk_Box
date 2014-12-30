@@ -1,0 +1,137 @@
+Django is a python framework:
+        To install the Django say:
+                sudo pip install django==version
+                sudo pip install django==1.7.1
+
+To check which version of Django is installed
+                python -c "import django;print(django.get_version())"
+
+For the very first application Database configuration, application specific settings are needed; That can be done by this command; just go to your Project folder and:
+                django-admin.py startproject mysite
+
+
+It'll create the folders as follows:
+                Mysite/
+                    manage.py
+                    mysite/
+                        __init__.py
+                        urls.py
+                        wsgi.py
+                        settings.py
+
+In settings.py file; All the settings are listed and can be used to configure database and we need to change the ENGINE section of the DATABASE dictionary as per the db chosen by us:
+                DATABASES = {
+                            'default': {
+                                        'ENGINE': 'django.db.backends.sqlite3',
+                                        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                                       }
+                            }
+
+for postgress: 'django.db.backends.postgresql_psycopg2'
+
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mydatabase',
+        'USER': 'mydatabaseuser',
+        'PASSWORD': 'mypassword',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+                }
+               }
+
+for mysql:     'django.db.backends.mysql'
+for sqlite3:   'django.db.backends.sqlite3'
+for oracle:    'django.db.backends.oracle'
+
+MongoDB configuration:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django_mongodb_engine',
+        'NAME': 'mydatabase',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '27017',
+        'SUPPORTS_TRANSACTIONS': False,
+                },
+               }
+
+It will create the mysqlite db file:
+        python manage.py migrate
+
+    The migrate command looks at the installed_aaps setting and creates any necessary db tables acc. to db settings in mysql/settings.py
+
+To check whether the server is running or not
+        python manage.py runserver
+
+and then check for http://127.0.0.1:8000/ on browser that will show me the welcome page for Django because in settings.py DEBUG=TRUE is set.
+        We can manually change the port while giving the runserver command.
+
+Now; We can say our project is ready and can start creating applications; Now need to worry about creating directories
+        python manage.py startapp polls
+
+It'll create the folders as follows:
+        polls/
+            admin.py
+            __init__.py
+            migrations/
+                models.py
+                views.py
+                tests.py
+
+
+We'll try to start our project by first writing the code in models.py file as:
+        
+        from django.db import models
+        # Create your models here.
+        class Question(models.Model):
+            question_text = models.CharField(max_length=200)
+            pub_date = models.DateTimeField('date published')
+
+
+        class Choice(models.Model):
+            question = models.ForeignKey(Question)
+            choice_text = models.CharField(max_length=200)
+            votes = models.IntegerField(default=0)
+
+Here; django will understand what type of varaiable it is by looking as CharField/DateTimeField/IntegerField.
+Django apps are pluggable:I can use an app in multiple project
+
+As now with the project; I need to attach my app So In settings.py with INSTALLED_APPS dictionary; I'll add 'polls' (app_name) also.
+run the following command as:
+        python manage.py makemigrations polls
+
+By running migrations; We're telling django that we've made some changes to our models and I'd like changes to be stored as a Migration.
+
+Migrations are how Django stores changes to our models
+This command will take the migrations and will returns the sql acc. to the Migrations defined
+        python manage.py sqlmigrate polls 0001
+
+    After running this command I got this kind of output on terminal
+
+
+                                BEGIN;
+                                CREATE TABLE polls_question (
+                                    "id" serial NOT NULL PRIMARY KEY,
+                                    "question_text" varchar(200) NOT NULL,
+                                    "pub_date" timestamp with time zone NOT NULL
+                                );
+
+                                CREATE TABLE polls_choice (
+                                    "id" serial NOT NULL PRIMARY KEY,
+                                    "question_id" integer NOT NULL,
+                                    "choice_text" varchar(200) NOT NULL,
+                                    "votes" integer NOT NULL
+                                );
+
+                                CREATE INDEX polls_choice_7aa0f6ee ON "polls_choice" ("question_id");
+
+                                ALTER TABLE "polls_choice"
+                                  ADD CONSTRAINT polls_choice_question_id_246c99a640fbbd72_fk_polls_question_id
+                                    FOREIGN KEY ("question_id")
+                                    REFERENCES "polls_question" ("id")
+                                    DEFERRABLE INITIALLY DEFERRED;
+                                COMMIT;
+
+

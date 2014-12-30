@@ -12,7 +12,7 @@ pygame.draw.rect(DISPLAYSURF, RED, (200, 150, 100, 50))	<screen,color,rectangle_
 pixObj = pygame.PixelArray(DISPLAYSURF)											#Creates a pixel object
 pixObj[480][380] = BLACK												#Draws the Pixel
 When you create the pixel object; The surface get locked and we can't draw images on locked surface, So We need to del the pixel Object in order to unlock the screen.
-To check whether the screen is locked or not, I need to use get_locked() eg. DISPLAYSURF.get_locked()
+To check whether the screen is locked or not, I need to use get_locked(). DISPLAYSURF.get_locked()
 Linux-->  
 
 	yum install python-devel SDL_image-devel SDL_mixer-devel SDL_ttf-devel SDL-devel smpeg-devel numpy subversion portmidi-devel

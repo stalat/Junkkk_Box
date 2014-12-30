@@ -30,7 +30,7 @@ To check which process is under root and which is in under normal user:
 
 To change the ownership of the folder named Friends to stalat use :
 	
-	sudo chown -R stalat:stalat ./Friends	<Changing the ownership>[-R is used to change the ownership of folders inside folders]
+	sudo chown -R stalat:stalat ./Friends	<Changing te ownership>[-R is used to change the ownership of folders inside folders]
 	sudo chmod -R ugo ./Friends		<Giving the permission>
 
 
