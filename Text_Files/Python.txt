@@ -1,4 +1,5 @@
 Code refactoring is restructuring the existing code without changing its external behaviour.
+If you want to get help regarding the python via prompt; check with help() on terminal
 
 If I want to check whether the sequence container is empty or not Simply Use:
 	bool(sequence)
@@ -72,6 +73,10 @@ Simple Strings:
 	s.startswith('x')		#Will return True
 	s="Hello \			#Will merge it to a single line
 	   Talat"
+    s1='Talat'  
+    s2='Parwez'         
+    "{0}{1}".format(s1, s2)
+    "%s%s"%(s1, s2)
 
 Reversing the string:
 	s='Hello'
@@ -181,18 +186,25 @@ simple tuple functions:
 <FILE OPERATION>
 	
 	for loop can also work with the file object
+         r --> read only
+         w --> if file exists, delete all content and open it to write
+         a --> Append to the existing content
+
 	Make a text File as text.txt, 	['r', 'w', 'a']
 	data='Some String'
-	f.readline()		#will read the lines one by one 
+       	f.read()			#will read the whole file at a once
+	f.readline()		        #will read the lines one by one 
+        f.readlines()                   #Will read all the lines in a List
 	f=open('test.txt','mode')
-	f.read()			#will read the whole file at a once
+
 	f.write('data')
 	f.writelines('data')
 	f.append('data')
 	f.read(30)			#will read first 30 characters
 	f.read(30)			#next 30 characters
 	f.seek(0)			#will move the pointer to 0th index
-	f.tell()			#will tell the pointer's position
+        f.seek(-3, 2 )                  #Go to 3rd byte from the end ... [1 start of file, 2 end of file]
+	f.tell()			#will tell the pointer's position(Offset position)
 	f.flush()
 
 	with keyword is also used to open a file and it will automatically close the file when goes out of the scope.
@@ -227,6 +239,16 @@ simple tuple functions:
 			print "Error has been Caught",E
 
 	It will try to perform all oprations defined in try block and if it catches the ValueError, Then will print the eror message
+        
+        If I want that this statement should be executed under all circumstances then, use finally block
+                try:
+                    f=open("file.txt",'w')
+                    t=12/0
+                catch ZeroDivisionError:
+                    print "Can't be divided by Zero"
+                finally:
+                    f.close()
+                    print "Closing the File object"
 
 
 The Last printed expression will be assigned to the variable _ (underscore)
@@ -256,6 +278,11 @@ Old methods are hidden by redefinition
 	mro[2]--> Standard Error 
 	mro[3]--> Exception Error
 	mro[4]--> Base Exception Error
+
+<HIGHER ORDER FUNCTIONS>
+        A function which does atleat one of the following:
+                Takes one or more functions as an argument.
+                Returns other function as an Output.        
 
 <MAP>
 	It takes one function and an iterator as input and applies the function on each value of the iterator and returns a list of result.
@@ -366,6 +393,23 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________________________________________________
 
 _____________________________________________________________________________________________________________________________________________________________
+<ITERATORS>
+	
+	Iterators have the special property to keep the one value @once. 
+
+
+			number='123456789'
+			n=iter(number)
+			n.next(),n.next()..... after reaching out the last element, It will throw an StopIteration Exception.
+
+
+If I want to check whether the file is having syntax file or not:
+	We can use the py_compile site package.
+
+		python -m py_compile "filename"
+	
+	It will give you what syntax error you have and in which line
+
 
 <DECORATOR>
 	A decorator is just a callable that takes a function as an Argument and return a replacement function
@@ -483,15 +527,29 @@ ________________________________________________________________________________
 	del object.attribute
 	
 		class MyClass:
-	   	"""A simple example class"""
-		i = 12345
-		def f(self):
-		    return 'hello world'
-
-
+	       	"""A simple example class"""
+		    i = 12345
+		    def f(self):
+		        return 'hello world'
 	Here i and f are the attributes of the class and can be accessed as MyClass.i and MyClass.f
 
-	If you want to make an object of it the you need to define it as:	
+        If there is a __init__() defined then we've to use the self keyword mandataroly to access that varaible.        
+                
+        class A(object):
+	i,j=11,21
+	def __init__(self):
+		self.i=10
+		self.j=20
+	def f(self):
+		print A.i                               #11
+		print self.j                            #20
+
+
+
+
+
+
+	If you want to make an object of it then you need to define it as:	
 		
 		obj_name=class_name()
 
@@ -513,7 +571,7 @@ ________________________________________________________________________________
 		t.x				#1
 		t.y				#2
 
-	Object is passed as a self argument to the function and self., self., are used to bind all those things to that particular Object Instance.
+	Object is passed as a self argument to the function and self is used to bind all the class things to that p       particular Object Instance.
 	One thing, Why self is used in every method of the class:
 	Because, When we say x=A(), Here ,,, Object is passed as an argument to the function.
 	Its is like 
@@ -525,7 +583,7 @@ ________________________________________________________________________________
 
 
 		class A():
-			i=12345							#shared by all instances of the class
+			i=12345						#shared by all instances of the class
 			def __init__(self,name):
 				self.name=name				#shared by specific instance
 
@@ -533,11 +591,10 @@ ________________________________________________________________________________
 
 		x=A()
 		x.i								#12345
-		x.foo("Talat")					#Talat 
 
 
 		class A():
-		name1="Poornima"
+		name1="Python"
 		def __init__(self,name,age):
 		    self.name=name
 		    self.age=age
@@ -549,7 +606,7 @@ ________________________________________________________________________________
 		print x.name1					#"TP"
 
 	If self with name1 was not given, then In lack of self keyword, name1 will not engaged with x object and will find to the upper most class. 
-	And will take the name1 as "Poornima".
+	And will take the name1 as "Python".
 
 
 	If I want to derive a baseclass into derivedclass i.e. Inheritance Concept. The syntax for Inheritance is as follows:
@@ -576,7 +633,7 @@ ________________________________________________________________________________
 	Multiple Inheritance:
 		
 		class B(object):
-			name="Poornima"
+			name="Python"
 
 		class A(B):
 			def __init__(self,name,age):
@@ -585,7 +642,7 @@ ________________________________________________________________________________
 				
 		x=A("Talat",22)
 		print x.age									#22
-		print x.name								#Poornima
+		print x.name								#Python
 		print issubclass(A,object)
 
 
@@ -621,9 +678,9 @@ ________________________________________________________________________________
 	class A():
 		b=10
 		def foo(self):
-		b=20
-		print b
-		print self.b
+		    b=20
+		    print b
+		    print self.b
 
 	a=A()
 	a.foo()					#10 \n 20
@@ -631,35 +688,82 @@ ________________________________________________________________________________
 
 
 
-<ITERATORS>
+
+        class Person(object):
+                """
+                Returns a ```Person``` object with given name.
+                """
+                def __init__(self, name):
+                        self.name = name
+                def get_details(self):
+                        "Returns a string containing name of the person"
+                        return self.name
+        class Student(Person):
+                """
+                Returns a ```Student``` object, takes 3 arguments, name, branch, year.
+                """
+                def __init__(self, name, branch, year):
+                        Person.__init__(self, name)
+                        self.branch = branch
+                        self.year = year
+                def get_details(self):
+                        "Returns a string containing student's details."
+                        return "%s studies %s and is in %s year." % (self.name, self.branch, self.year)
+        class Teacher(Person):
+                """
+                Returns a ```Teacher``` object, takes a list of strings (list of papers) as
+                argument.
+                """
+                def __init__(self, name, papers):
+                        Person.__init__(self, name)
+                        self.papers = papers
+                def get_details(self):
+                        return "%s teaches %s" % (self.name, ','.join(self.papers))
+
+        __call__():
+                Call method is used to make the object as a Callable; Like when an Object is created; It goes to __init__ method; But what if I need to 
+                modify the content of arguments, In this case I need to create another object; So, In this case; I can make the Object as callable say:
+                a=A(1, 2, 3)                            #It goes to __init__() method and instantiate the object
+                a(1,2,3)                                #I can't do if I havn't make the Object as callable
+
+                For Example:
+                        class A(object):
+                            def __init__(self,a,b,c):
+                                self.a=a
+                                self.b=b
+                                self.c=c
+                            def __call__(self,a,b,c):
+                                self.a=a
+                                self.b=b
+                                self.c=c
+                                print "Hello; Talat Parwez"
+
+               1. a=test.A(1,2,3)                         #Will Instantiate the object
+               2. a(1,2,3)                                #Will go to the __call__() method as Now our Object is callable
+
+                        Without __call__ method I couldn't be able to execute the 2nd line
+
+                
+       
+
 	
-	Iterators have the special property to keep the one value @once. 
+<MODULES> :
+    import python_file_name [without extension]
+    from python_file_name import fn1, fn2, fn3
+
+    We can have many submodules inside a module. A directory, with a __init__.py can also be used as a module and all
+    .py files inside it become submodules.
+    
+    If __init__.py file has __all__, and __init__.py contains the following;
+    from module import fn1
+    __all__ = [fn1]
 
 
-			number='123456789'
-			n=iter(number)
-			n.next(),n.next()..... after reaching out the last element, It will throw an StopIteration Exception.
+    then only the methods listed in list[i.e. fn1] will be imported when I'll do 
+    from mymodule import *
 
-What If I want the name of the caller's method name in calling function name: 
-Like .... This method is recieving the argument and have an object of which Function or which function called it:
-
-		def method1(self):
-		    ...
-		    a = A.method2()
-
-		def method2(self):
-		    ...
-
-
-If I want to check whether the file is having syntax file or not:
-	We can use the py_compile site package.
-
-		python -m py_compile "filename"
-	
-	It will give you what syntax error you have and in which line
-
-	
-        
+    
+      
 
 Pickle Module: We can store any plain python object in a file and can get back it later.
 
@@ -691,21 +795,12 @@ Sys Module:Access to some variable used or maintained by Interpreter and to that
 				python "file_name" Hello "Talat" Parwez
 				python "file_name" "Hello" Talat "Parwez"
 
-
-<HIGHER ORDER FUNCTION>
-	Known as functor which atleast do one of the things i.e.:
-		Take one or more functions as an argument
-		Returns another function as an output
-
+<OS>
+        To perform all the operating system related utilities; we use OS module
+        To check whether a particular path exists in System or not; We can use:
+                os.path.exists('/stalat/Instances/LA/') --> True if exists
 
 
+        __file__ will tell you the name of the file which is currently being executed.
 
-
-
-
-
-
-
-
-
-	
+        SQLite is included in Python, so you won’t need to install anything else to support your database.

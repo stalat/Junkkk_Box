@@ -52,7 +52,7 @@ After having all the changes you need to push into the repositories:
 	
 	check the branch; eg: you want to merge the code in "branch1", then use
 		
-		git rebase "branch1"
+		git rebase "remote_branch"
 
 	If you have unpushed commits then you need to stash them, for it you need to do as:
 
@@ -86,7 +86,7 @@ If you want to delete the branch in YOUR remote repo. while pushing then better 
 		git push TALAT local_branch_name:github_branch_you_want_to_create
 
 
-If you wat to pull from git repo; then use the command:
+If you want to pull from git repo; then use the command:
 		git pull Talat_py master
 		git pull <you remote URL alias> <Your Branch>
 
