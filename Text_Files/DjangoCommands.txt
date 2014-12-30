@@ -1,0 +1,9 @@
+sudo pip install django==1.7.1
+python -c "import django;print(django.get_version())"
+django-admin.py startproject mysite
+python manage.py migrate
+python manage.py runserver
+python manage.py runserver 1026
+python manage.py startapp polls
+python manage.py makemigrations polls
+python manage.py sqlmigrate polls 0001
