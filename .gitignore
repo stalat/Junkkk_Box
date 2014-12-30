@@ -5,6 +5,11 @@ __pycache__/
 # C extensions
 *.so
 
+#emacs cruft
+*~
+*#*
+*.pyc
+
 # Distribution / packaging
 .Python
 env/
