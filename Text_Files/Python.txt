@@ -783,6 +783,8 @@ Sys Module:Access to some variable used or maintained by Interpreter and to that
 	For Example:
 		    This one is used to get the command line arguments and command line arguments are those arguments when we give at the run time as:
 		    python "file_name" arg1, arg2, arg3, ...
+                    __future__ is used to get the functionallity of those functions that are not already present in your python; So with the application of
+                    __future__ we can import future functions
 		
 		    	from __future__ import print_function
 			import sys
