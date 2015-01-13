@@ -60,7 +60,89 @@ MongoDB configuration:
 It will create the mysqlite db file:
         python manage.py migrate
 
-    The migrate command looks at the installed_aaps setting and creates any necessary db tables acc. to db settings in mysql/settings.py
+        In manage.py file; We've a os.environ variable In which we can set the DJANGO_SETINGS_MODULE as the setting of my own project as:
+                import os;os.environ.set_default("DJANGO_SETINGS_MODULE", ' mysite.settings')
+
+    The migrate command looks at the installed_apps setting and creates all necessary db tables acc. to db settings in mysql/settings.py
+    MIGRATE functionallity come in django_1.7; Whenever we make changes in our models They need to be reflected in the database schema So MIGRATE do this.
+
+    We make the changes in our models and makemigration command will package up our model changes into individual migration files and migration will apply these
+    changes to Database Schema.[Updating your DB schema accn. to the latest change--GITHUB]
+    For better understanding of Migrations, let's take an example;
+        We already have a db schema and we make some changes to our model file So after performing the migrations on a file, the basic functionallity is like:
+            
+               1. Creating a new table with the new schema
+               2. Copying the data across
+               3. Dropping the old table
+               4. Renaming the new table to match the original name
+
+    When we first run the migrate command it creates the file under app_name/migrations directory and when without changing if migration is performed again;
+    It won't do anything, So by default Django never runs the migrate command over the same database.
+    For each migration that will ran; a new row is inserted into the table for the track of migrations happened.
+    We can also undo all the migrations done on an app by firing this command:
+        ./manage.py migrate historical_data zero
+
+    Everytime I change the model file and makemirations over manage.py file; It'll create a new migraion file under migrations folder
+    Instead of Zero we can also give other value so migration will be rolled back to that particular migrations.
+    app_name/migrations/0001_initial.py is the file where the migration code is generated
+
+                MODELS.PY:
+                        from django.db import models
+
+                        # Create your models here.
+                        class Question(models.Model):                           #Question and Choie will be the class name
+                            question_text = models.CharField(max_length=200)    #quetion_txt and pub_date will be the columns for this table
+                            pub_date = models.DateTimeField('date published')
+
+
+                        class Choice(models.Model):
+                            question = models.ForeignKey(Question)
+                            choice_text = models.CharField(max_length=200)
+                            votes = models.IntegerField(default=0)
+    
+    For this model file; The migration code has been generated and that code is as follows:
+
+                        from __future__ import unicode_literals
+
+                        from django.db import models, migrations
+
+
+                        class Migration(migrations.Migration):
+
+                            dependencies = [
+                            ]
+
+                            operations = [
+                                migrations.CreateModel(
+                                    name='Choice',
+                                    fields=[
+                                        ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                                        ('choice_text', models.CharField(max_length=200)),
+                                        ('votes', models.IntegerField(default=0)),
+                                    ],
+                                    options={
+                                    },
+                                    bases=(models.Model,),
+                                ),
+                                migrations.CreateModel(
+                                    name='Question',
+                                    fields=[
+                                        ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                                        ('question_text', models.CharField(max_length=200)),
+                                        ('pub_date', models.DateTimeField(verbose_name='date published')),
+                                    ],
+                                    options={
+                                    },
+                                    bases=(models.Model,),
+                                ),
+                                migrations.AddField(
+                                    model_name='choice',
+                                    name='question',
+                                    field=models.ForeignKey(to='polls.Question'),
+                                    preserve_default=True,
+                                ),
+                            ]
+
 
 To check whether the server is running or not
         python manage.py runserver
@@ -69,7 +151,7 @@ and then check for http://127.0.0.1:8000/ on browser that will show me the welco
         We can manually change the port while giving the runserver command.
 
 Now; We can say our project is ready and can start creating applications; Now need to worry about creating directories
-        python manage.py startapp polls
+        $ python manage.py startapp polls
 
 It'll create the folders as follows:
         polls/
@@ -89,14 +171,13 @@ We'll try to start our project by first writing the code in models.py file as:
             question_text = models.CharField(max_length=200)
             pub_date = models.DateTimeField('date published')
 
-
         class Choice(models.Model):
             question = models.ForeignKey(Question)
             choice_text = models.CharField(max_length=200)
             votes = models.IntegerField(default=0)
 
 Here; django will understand what type of varaiable it is by looking as CharField/DateTimeField/IntegerField.
-Django apps are pluggable:I can use an app in multiple project
+Django apps are pluggable: I can use an app in multiple project
 
 As now with the project; I need to attach my app So In settings.py with INSTALLED_APPS dictionary; I'll add 'polls' (app_name) also.
 run the following command as:
@@ -105,10 +186,14 @@ run the following command as:
 By running migrations; We're telling django that we've made some changes to our models and I'd like changes to be stored as a Migration.
 
 Migrations are how Django stores changes to our models
+
 This command will take the migrations and will returns the sql acc. to the Migrations defined
         python manage.py sqlmigrate polls 0001
 
     After running this command I got this kind of output on terminal
+    polls -- apllication name
+    question -- model name
+    choice -- model name
 
 
                                 BEGIN;
@@ -134,4 +219,52 @@ This command will take the migrations and will returns the sql acc. to the Migra
                                     DEFERRABLE INITIALLY DEFERRED;
                                 COMMIT;
 
+Django apps are pluggable so we can use any app in multiple projects.
 
+                                python manage.py check
+
+        this checks for any problems in your project without making migrations or touching the database
+
+
+    Change your models (in models.py).
+    $ python manage.py makemigrations to create migrations for those changes
+    $ Run python manage.py migrate to apply those changes to the database.
+
+Django takes all the migrations that havn't been applied, Django keeps track which ones are applied by special table called django_migrations.
+
+Playing with the API:
+    We can directly open the python shell by simply typing python but We use this command to invoke the Python shell
+                    $ python manage.py shell
+
+    Because manage.py set the DJANGO_SETTINGS_MODULE environment into mysite.settings #check manage.py file
+
+We can now insert the values in the database we created
+
+        from polls.models import Question, Choice
+        Question.objects.all()
+        from django.utils import timezone
+        q = Question(question_text="What's new?", pub_date=timezone.now())
+        q.save()
+        q.question_text         #will give "What's new?"
+        q.pub_date              #datetime.datetime(2012, 2, 26, 13, 0, 0, 775217, tzinfo=<UTC>)
+        q.question_text = "What's up?"
+        q.save()
+        Question.objects.all()
+
+
+Any number of objects I can create by the same method and they'll be listed as:
+        [<Question: Talat>, <Question: Hello Talat>, <Question: Hello Talat>, <Question: This is first Object>, <Question: This is first Object>, <Question: This is first Object>]
+
+        In case I want to look only for a single object I can do this by:
+                Question.objects.filter(id=1)                   #id= index for Objects
+                Question.objects.filter(question_text='Hello Talat')
+                Question.objects.filter(question_text__startswith = 'Hello')
+                Question.objects.filter(pub_date__year = timezone.now().year)                        
+        
+        If I want to get the object then say:
+                Question.objects.get(id=2)
+                Question.objects.get(pk=1)                      #In case of a primary key
+        
+        Can I delete the object??? Yes, I can
+                t=Question.objects.get(id=1)
+                t.delete()
