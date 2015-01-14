@@ -628,8 +628,36 @@ If I want to check whether the file is having syntax file or not:
 	We can check whether the object is instance of the class or not as : isinstance(obj,class)
 	We can check whether the derived_class is subclass of base_class or not as: issubclass(derived_class,base_class)
 
+<SUPER>:
+        Super is a keyword that is used to make a call to the super class method's along with current class method:
+        suppose there is a class that is been inherited by child class and both of them have the __init__() methods, So without using the super keyword we can;t 
+        call the parent class's __init__(), we need to put super keyword in child class that while initializing the current class; the parent class of it also 
+        needs to be initialized.
+        It's more like How can I call the method of parent class if both child and parent class has the same method name
+        e.g.
+           
+                                        class A(object):
+                                            def __init__(self, a):
+                                                self.a = a
+                                                print "Class A's constructor"
+                                            def foo(self):
+                                                print "I'm in class A"
+                                            def fo1(self):
+                                                print "Class A"
+
+                                        class C(A):
+                                            def __init__(self, a):
+                                                self.a = a
+                                                print "Class C's constructor"
+                                                super(C, self).__init__(self.a)
+                                            def foo(self):
+                                                print "I'm in class C"
 
 
+        When an object is created for a class C; then it'll also call the constructor method of parent class i.e. of class A
+                                        obj = C(10)
+                                                                o/p will be "Class C's constructor" and then "Class B's constructor"
+        Whatever method we'll call in super method's line then it'll be called
 	Multiple Inheritance:
 		
 		class B(object):
@@ -744,9 +772,24 @@ If I want to check whether the file is having syntax file or not:
                         Without __call__ method I couldn't be able to execute the 2nd line
 
                 
-       
+<MAGIC METHODS> :
+    These are those methods which can be used as built-in methods and listed as follows:
+        __eq__,__ne__, __gt__, __le__, __ge__, __pos__(self), __neg__(self), __abs__(self), __invert__(self) [NOT operator], __round__(self, n),
+        __floor__(self), __ceil__(self), __trunc__(self), __add__(self, other), __sub__(self, other), __mul__(self, other), __floordiv(self, other), __div__(self,
+other), __truediv__(self, other), __mod__(self, other), __divmod__(self, other), __pow__(self, other), __and__(self, other), __or__(sel, other), __xor__(self, other), __int__(self)
+    
+    Some magic methods are also available for representation of Class 
+        __str__(self), __repr__(self), __unicode__(self), __format__(self), __hash__(self), __nonzero__(self), __dir__(self), __sizeof__(self)
 
-	
+	    __str__() defines behaviour when str() is called on the instance of the class
+        __repr__() defines behaviour when str() is called on the instance of the class
+                The difference between them is intended audience; __repr__() machine readable and __str__() is human readable
+        __unicode__() same as __str__ but return a unicode string
+        __hash__(self), dir(), __getattr__(self, name), __setattr__(self, name, value), __delattr__(self, name), __getattribute__()
+
+
+
+
 <MODULES> :
     import python_file_name [without extension]
     from python_file_name import fn1, fn2, fn3
