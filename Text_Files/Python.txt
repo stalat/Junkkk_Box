@@ -813,7 +813,34 @@ other), __truediv__(self, other), __mod__(self, other), __divmod__(self, other),
                 The difference between them is intended audience; __repr__() machine readable and __str__() is human readable
         __unicode__() same as __str__ but return a unicode string
         __hash__(self), dir(), __getattr__(self, name), __setattr__(self, name, value), __delattr__(self, name), __getattribute__()
-
+        __len__(self), __getitem__(self, key), __setitem__(self, key, value), __delitem__(self, key), __iter__(self), __reversed__(self)
+        __copy__(self)==shallow copy, __deepcopy__(self, dict)       
+        
+        For immutable objects, there's no need of for copying because the data will never change.Python uses the same data and Ids are always the same.
+        For mutable objects; Since they can potentially change, Shallow copy creates a new object.
+        For mutable objests; Since they can potentially change, Deep copy creates a new object for Main list as well as for the data containing inside in it.
+                Suppose I have a list of lists, then deep copy created the object for nested lists also; So While working with mutable data objects, 
+                Inner items will have the different ids as they are different objects. 
+        If I change the data object, It will be reflected in copied data object in case of shallow copy
+        If I change the data object, It will not be reflected in copied object in case of deep copy 
+                       
+                        class FunctionalTests(object):
+                            def __init__(self, *values):
+                                if values is None:
+                                    self.values = []
+                                    print "It recieved nothing ",self.values
+                                else:
+                                    self.values = values
+                                    print "It recieved some values i.e.", self.values
+                            
+                            def __len__(self):
+                                print "The total number of items recieved are: ", len(self.values)
+                            
+                            def __getitem__(self, key):
+                                try:
+                                    print "The item you're looking for is: ", self.values[key]
+                                except IndexError, e:
+                                    print "You've given Index more than the length of Sequence"
 
 
 
