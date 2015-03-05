@@ -628,6 +628,7 @@ If I want to check whether the file is having syntax file or not:
 	We can check whether the object is instance of the class or not as : isinstance(obj,class)
 	We can check whether the derived_class is subclass of base_class or not as: issubclass(derived_class,base_class)
 
+
 <SUPER>:
         Super is a keyword that is used to make a call to the super class method's along with current class method:
         suppose there is a class that is been inherited by child class and both of them have the __init__() methods, So without using the super keyword we can;t 
@@ -797,6 +798,16 @@ If I want to check whether the file is having syntax file or not:
                2. a(1,2,3)                                #Will go to the __call__() method as Now our Object is callable
 
                         Without __call__ method I couldn't be able to execute the 2nd line
+
+
+<ACCESSING OBJECT ELEMENT>
+    If there's an object and want to know the elements associated with this object the We can use,
+        dir(obj)
+        vars(obj)
+        inpect.getmembers(obj)
+        obj.__dict__
+        from pprint import pprint 
+        pprin(dir(obj)), pprint(vars(obj))
 
                 
 <MAGIC METHODS> :
