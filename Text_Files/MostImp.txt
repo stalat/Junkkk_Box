@@ -89,6 +89,9 @@ If I want to login into another system then use:
 		ssh username@ip_adress
 		password:____________
 
+If I want to generate a ssh key, then type this command and navigate to .ssh folder and copy id_rsa.pub key then put onto github ssh section,
+
+		ssh-keygen -t rsa -C "username@domain.com"
 
 ShellScript:
 
