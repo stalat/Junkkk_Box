@@ -245,3 +245,6 @@ History of Commands:
 !n									#Refers to the nth command from the history 
 !string									#refers to the recent command started with the string
 ^string1^string2							#refers to the last command and change the string1 with string2
+
+yolk-l is used to check what all the things with what versions are installed.
+
