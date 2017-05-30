@@ -1,0 +1,4 @@
+stage 'test'
+{
+checkout scm
+}
